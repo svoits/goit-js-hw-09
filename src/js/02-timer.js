@@ -9,6 +9,7 @@ const refs = {
   hoursEl: document.querySelector('[data-hours]'),
   minutesEl: document.querySelector('[data-minutes]'),
   secondsEl: document.querySelector('[data-seconds]'),
+  dateInputEl: document.querySelector('#datetime-picker'),
 };
 
 // disable start button until a date in the future is chosen
@@ -22,6 +23,8 @@ refs.startBtnEl.addEventListener('click', onStartBtnClick);
 
 // notifying when start and sets interval
 function onStartBtnClick() {
+  refs.startBtnEl.disabled = true;
+  refs.dateInputEl.disabled = true;
   Notify.success('Let`s count! 🔥🔥🔥');
   timerIntervalId = setInterval(timerRender, 1000);
 }
@@ -46,6 +49,8 @@ function timerRender() {
   const remainingTime = flatpickrDate.selectedDates[0] - Date.now();
 
   if (remainingTime < 1000) {
+    refs.startBtnEl.disabled = false;
+    refs.dateInputEl.disabled = false;
     Notify.success('Counter finished work! 🎉🎉🎉');
     clearInterval(timerIntervalId);
   }
